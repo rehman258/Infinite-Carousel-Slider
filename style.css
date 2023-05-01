@@ -1,0 +1,24 @@
+body{
+    margin: 0px;
+    padding: 0px;
+}
+
+
+.slider-container{
+    width: 100%;
+    border: .5px solid grey;
+}
+
+.slider-lens{
+    /* background-color: ; */
+    width: 13660px;
+    transform: translate3d(-2732px,0px,0px);
+    /* display: flex; */
+
+}
+.slider-container .slider-lens .slider-item{
+    /* background-color: ; */
+    width: 1366px;
+    display: inline-block;
+
+}
