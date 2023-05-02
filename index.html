@@ -32,7 +32,18 @@
     <script src="./app.js"></script>
     <script>
         const slider = new Slider();
-        slider.init('.slider-container')
+        slider.init('.slider-container',{
+            items:2,
+            margin:'5px',
+            padding:'5px',
+            button:true,
+            dost:false,
+            loop:true,
+            auto:false,
+            time:1000,
+            autoplay:false,
+            autoplaySpeed:1000,
+        })
     </script>
 </body>
 </html>
