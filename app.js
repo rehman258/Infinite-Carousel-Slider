@@ -75,6 +75,23 @@ class Slider {
         }
 
 
+        // slider clones left and right sides for steps
+        let i =0;
+        do{
+            // console.log(i,step)
+
+            if(i===step){
+                i=0;
+            }
+            
+            console.log(this.sliderItems[i])
+            
+            // console.log(i)
+            i++;
+            // console.log(step);
+            // console.log(i);
+        }while(i<step)
+
 
 
 
