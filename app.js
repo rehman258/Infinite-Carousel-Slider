@@ -19,20 +19,20 @@ class Slider {
     }
 
 
-    _configSlider(settings){
+    _configSlider(){
         const {
-            items,
-            margin,
-            padding,
-            step,
-            button,
-            dost,
-            loop,
-            auto,
-            time,
-            autoplay,
-            autoplaySpeed,
-        } = settings;
+            items=1,
+            margin=0,
+            padding=0,
+            step=1,
+            button=false,
+            dost=false,
+            loop=false,
+            auto=false,
+            time=1000,
+            autoplay=false,
+            autoplaySpeed=1000,
+        } = this.settings;
         // console.log(this.lensEnd)
 
         this.lens = document.createElement('div');
@@ -62,37 +62,22 @@ class Slider {
 
         // lens start at this position , calculation here cause of after cloned before elements
         
-         
-        
+        // console.log(this.sliderItems.length)
 
+        // for(let i=0;i<step;i++){
+        //     // console.log(i)
+        // }
+        
+        // console.log(step)
         
         // slider filling empyty items places with exist items
         const defLenght = this.sliderItems.length;
+        
         for(let i=0; i<items-defLenght; i++){
                 let clonedItem = this.sliderItems[i].cloneNode(true);
                 clonedItem.classList.add('cloned');
                 this.sliderItems.push(clonedItem);
         }
-
-
-        // slider clones left and right sides for steps
-        let i =0;
-        do{
-            // console.log(i,step)
-
-            if(i===step){
-                i=0;
-            }
-            
-            console.log(this.sliderItems[i])
-            
-            // console.log(i)
-            i++;
-            // console.log(step);
-            // console.log(i);
-        }while(i<step)
-
-
 
 
 
@@ -134,12 +119,12 @@ class Slider {
 
     
     init(containerClass,settings){
+        this.settings=settings;
         
         this.slider = document.querySelector(containerClass);
         this.sliderItems =  new Array(...document.querySelectorAll(`.${this.slider.children[0].className}`));
 
-        this._configSlider(settings);
-
+        this._configSlider();
 
         this.slider.append(this.lens)
 
@@ -157,24 +142,39 @@ class Slider {
 
 
     _lensMovement(lensDir){
-        // let lensLocalArray = window.getComputedStyle(this.lens).getPropertyValue('transform').split(',');
-        // this.lensPosition = parseInt(lensLocalArray[lensLocalArray.length-2]);
+        const {
+            items=1,
+            margin=0,
+            padding=0,
+            step=1,
+            button=false,
+            dost=false,
+            loop=false,
+            auto=false,
+            time=1000,
+            autoplay=false,
+            autoplaySpeed=1000,
+        } = this.settings;
+
+        let lensLocalArray = window.getComputedStyle(this.lens).getPropertyValue('transform').split(',');
+        this.lensPosition = parseInt(lensLocalArray[lensLocalArray.length-2]);
+        // console.log(this.lensPosition)
         // // setTimeout(()=>{
 
-        //     if(lensDir==='next'){
-        //         // console.log(this.lensEnd)
-        //         // console.log(this.lens.clientWidth - ((this.lens.clientWidth/this.sliderItems.length)*this.rightClones.length))
+            if(lensDir==='next'){
+                // console.log(this.lensEnd)
+                // console.log(this.lens.clientWidth - ((this.lens.clientWidth/this.sliderItems.length)*this.rightClones.length))
 
-        //         console.log(this.lensStart)
-        //         console.log(this.lensEnd)
-        //         console.log(lensLocal)
+                // console.log(this.lensStart)
+                // console.log(this.lensEnd)
+                // console.log(lensLocal)
 
 
-        //         this.lens.style.transform = `translate3d(${lensLocal-this.sliderItemWidth}px,0px,0px)`
+                this.lens.style.transform = `translate3d(${this.lensPosition-(this.sliderItemWidth*step)}px,0px,0px)`
             
-        //     }else{
-        //         this.lens.style.transform = `translate3d(${lensLocal+this.sliderItemWidth}px,0px,0px)`
-        //     }
+            }else{
+                this.lens.style.transform = `translate3d(${this.lensPosition+(this.sliderItemWidth*step)}px,0px,0px)`
+            }
             // console.log(this.sliderItemWidth)
         // },500)
     }

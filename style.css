@@ -7,6 +7,7 @@ body{
 .slider-container{
     width: 100%;
     border: .5px solid grey;
+    padding:10px 0px;
 }
 
 .slider-lens{
@@ -20,5 +21,9 @@ body{
     /* background-color: ; */
     /* width: 1366px; */
     display: inline-block;
+
+    background-color: lightgrey;
+
+    /* border:.5px solid lightgrey; */
 
 }
