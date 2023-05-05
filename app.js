@@ -40,6 +40,8 @@ class Slider {
         // clone element both sides for appding to before and end 
 
 
+        console.log(Math.ceil(items/2));
+        console.log(Math.floor(step/2))
 
 
         // this.sliderItems.forEach((item,i)=>{
@@ -88,6 +90,10 @@ class Slider {
         // declare start and end positions
         this.lensStart=-this.leftClones.length * this.sliderItemWidth;
         this.lensEnd = this.sliderItems.length * this.sliderItemWidth;
+
+
+        
+
 
 
         // set start position
