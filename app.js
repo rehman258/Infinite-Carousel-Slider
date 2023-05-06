@@ -40,9 +40,10 @@ class Slider {
         // clone element both sides for appding to before and end 
 
 
-        console.log(Math.ceil(items/2));
-        console.log(Math.floor(step/2))
+        // console.log();
+        // console.log()
 
+        // let 
 
         // this.sliderItems.forEach((item,i)=>{
         //     if((this.sliderItems.length/i) < i){
