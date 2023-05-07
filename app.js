@@ -9,6 +9,7 @@ class Slider {
         this.lensEnd;
 
         this.sliderItems; 
+        this.sliderItemsInitLength;
         this.settings={
             items:1,
             margin:0,
@@ -27,7 +28,6 @@ class Slider {
         this.nextBtn = document.createElement('BUTTON');
     }
 
-
     _configSlider(){
         const {
             items,
@@ -44,29 +44,18 @@ class Slider {
         } = this.settings;
 
         this.slider.innerHTML='';
-        
+        this.sliderItemsInitLength = this.sliderItems.length;     
+    
         // slider item width calculating by items param set by user
         
         
         this.lens = document.createElement('div');
         this.lens.classList.add('slider-lens');
-        
+        // console.log()
 
+        /**********************************************************/
+        /**********************************************************/
 
-        // collection all slider element in one place
-        // this.sliderItems = this.leftClones.concat(this.sliderItems,this.rightClones)
-
-
-        // lens start at this position , calculation here cause of after cloned before elements
-        
-        // console.log(this.sliderItems.length)
-
-        // for(let i=0;i<step;i++){
-        //     // console.log(i)
-        // }
-        
-        // console.log(step)
-        
         // slider filling empyty items places with exist items
         const defLenght = this.sliderItems.length;
         for(let i=0; i<items-defLenght; i++){
@@ -75,41 +64,73 @@ class Slider {
                 this.sliderItems.push(clonedItem);
         }
 
-        
-
+        /**********************************************************/
+        /**********************************************************/
 
         // clone element both sides for appding to before and end 
-        const copiesCount = Math.ceil(items/2)+Math.floor(step/2);
 
-        const firstSide = [...this.sliderItems];
-        const secondSide = [...this.sliderItems];
+        let rightSide=[];
+        let leftSide=[];
+        if(this.sliderItemsInitLength < items){
 
-        const rightSide = firstSide.splice(0,copiesCount).map(item=>{
-            let clonedItem = item.cloneNode(true);
-            clonedItem.classList.add('cloned');
-            return clonedItem
-        });
 
-        // console.log(secondSide.splice(copiesCount,secondSide.length))
-        const leftSide = secondSide.splice(secondSide.length-copiesCount,secondSide.length).map(item=>{
-            let clonedItem = item.cloneNode(true);
-            clonedItem.classList.add('cloned');
-            return clonedItem
-        });
+
+            // const copiesCount = Math.ceil(items/2)+Math.floor(step/2);
+
+            // const firstSide = [...this.sliderItems];
+            // const secondSide = [...this.sliderItems];
+
+
+            // let testVar = this.sliderItems.length - step;
+            // rightSide = firstSide.splice(0,copiesCount).map(item=>{
+            //     let clonedItem = item.cloneNode(true);
+            //     clonedItem.classList.add('cloned');
+            //     return clonedItem
+            // });
 
         
-        this.sliderItems = leftSide.concat(this.sliderItems,rightSide)
+            // leftSide = secondSide.splice(secondSide.length-copiesCount,secondSide.length).map(item=>{
+            //     let clonedItem = item.cloneNode(true);
+            //     clonedItem.classList.add('cloned');
+            //     return clonedItem
+            // });
+            // this.sliderItems = leftSide.concat(this.sliderItems,rightSide)
+
+        }else{
+            const copiesCount = Math.ceil(items/2)+Math.floor(step/2);
+
+            const firstSide = [...this.sliderItems];
+            const secondSide = [...this.sliderItems];
+
+
+            let testVar = this.sliderItems.length - step;
+            rightSide = firstSide.splice(0,copiesCount).map(item=>{
+                let clonedItem = item.cloneNode(true);
+                clonedItem.classList.add('cloned');
+                return clonedItem
+            });
 
         
+            leftSide = secondSide.splice(secondSide.length-copiesCount,secondSide.length).map(item=>{
+                let clonedItem = item.cloneNode(true);
+                clonedItem.classList.add('cloned');
+                return clonedItem
+            });
+            this.sliderItems = leftSide.concat(this.sliderItems,rightSide)
+
+        }
+        
+
+        
+
+        /**********************************************************/
+        /**********************************************************/
+            
         // declare start and end positions
         this.sliderItemWidth = this.slider.clientWidth/items;
-        
-        this.lensStart=-leftSide.length * this.sliderItemWidth;
+
+        this.lensStart =- leftSide.length * this.sliderItemWidth;
         // this.lensEnd = sliderItems.length * this.sliderItemWidth;
-
-
-        
-
 
         // set start position
         this.lens.style.transform= `translate3d(${this.lensStart}px,0px,0px)`;
@@ -120,8 +141,8 @@ class Slider {
             this.lens.append(sliderItem);
         })
 
-
-
+        /**********************************************************/
+        /**********************************************************/
 
 
 
@@ -165,17 +186,17 @@ class Slider {
 
     _lensMovement(lensDir){
         const {
-            items=1,
-            margin=0,
-            padding=0,
-            step=1,
-            button=false,
-            dost=false,
-            loop=false,
-            auto=false,
-            time=1000,
-            autoplay=false,
-            autoplaySpeed=1000,
+            items,
+            margin,
+            padding,
+            step,
+            button,
+            dost,
+            loop,
+            auto,
+            time,
+            autoplay,
+            autoplaySpeed,
         } = this.settings;
 
         let lensLocalArray = window.getComputedStyle(this.lens).getPropertyValue('transform').split(',');
@@ -184,13 +205,6 @@ class Slider {
         // // setTimeout(()=>{
 
             if(lensDir==='next'){
-                // console.log(this.lensEnd)
-                // console.log(this.lens.clientWidth - ((this.lens.clientWidth/this.sliderItems.length)*this.rightClones.length))
-
-                // console.log(this.lensStart)
-                // console.log(this.lensEnd)
-                // console.log(lensLocal)
-
 
                 this.lens.style.transform = `translate3d(${this.lensPosition-(this.sliderItemWidth*step)}px,0px,0px)`
             
