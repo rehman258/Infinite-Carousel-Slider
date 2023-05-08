@@ -75,26 +75,26 @@ class Slider {
 
 
 
-            // const copiesCount = Math.ceil(items/2)+Math.floor(step/2);
+            const copiesCount = Math.ceil(items/2)+Math.floor(step/2);
+            // console.log()
+            const firstSide = [...this.sliderItems];
+            const secondSide = [...this.sliderItems];
 
-            // const firstSide = [...this.sliderItems];
-            // const secondSide = [...this.sliderItems];
 
-
-            // let testVar = this.sliderItems.length - step;
-            // rightSide = firstSide.splice(0,copiesCount).map(item=>{
-            //     let clonedItem = item.cloneNode(true);
-            //     clonedItem.classList.add('cloned');
-            //     return clonedItem
-            // });
+            let testVar = this.sliderItems.length - step;
+            rightSide = firstSide.splice(0,copiesCount).map(item=>{
+                let clonedItem = item.cloneNode(true);
+                clonedItem.classList.add('cloned');
+                return clonedItem
+            });
 
         
-            // leftSide = secondSide.splice(secondSide.length-copiesCount,secondSide.length).map(item=>{
-            //     let clonedItem = item.cloneNode(true);
-            //     clonedItem.classList.add('cloned');
-            //     return clonedItem
-            // });
-            // this.sliderItems = leftSide.concat(this.sliderItems,rightSide)
+            leftSide = secondSide.splice(secondSide.length-copiesCount,secondSide.length).map(item=>{
+                let clonedItem = item.cloneNode(true);
+                clonedItem.classList.add('cloned');
+                return clonedItem
+            });
+            this.sliderItems = leftSide.concat(this.sliderItems,rightSide)
 
         }else{
             const copiesCount = Math.ceil(items/2)+Math.floor(step/2);
