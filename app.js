@@ -78,16 +78,45 @@ class Slider {
             // console.log(copiesCount)
             let test11 = [...this.sliderItems];
             let test22 = [...this.sliderItems];
+
+            let copiedItemsCount = this.sliderItems.length-defLength; 
+            // console.log(test11.splice(1,copiesCount))
+            // let gg = copiedItemsCount - defLength;
+            // console.log(copiedItemsCount,'copies')
+            // console.log(defLength,'deflength')
+            // console.log(this.sliderItems.length,'all items')
+            // console.log( ' ')
+            // console.log((this.sliderItems.length-copiedItemsCount),'calc 1')
             
-            console.log(test11.splice(1,copiesCount))
-            // console.log(this.sliderItems.length - defLength)
-            if(Array(...test11).splice(1,copiesCount).length !== Array(...test22).splice(items-defLength,copiesCount).length){
-                console.log(test22.splice(defLength,copiesCount))
-                console.log(defLength)
+            if(copiedItemsCount > defLength){
+                // console.log(
+                //     // this.sliderItems.length
+                //     // -
+                    
+                // )
+                console.log(test22.splice(copiedItemsCount%defLength,copiesCount))
+                // console.log(copiedItemsCount - defLength)
                 
-            }else{
-                console.log(test22.splice(items-defLength,copiesCount))
+            }else if(copiedItemsCount === defLength){
+                console.log(test22.splice(0,copiesCount))
+                // console.log('bbb')
+            }else {
+                console.log(test22.splice(copiedItemsCount,copiesCount))
             }
+
+            // console.log(this.sliderItems.length)
+            // console.log(defLength)
+            // console.log(copiedItemsCount-defLength)
+
+
+            // console.log(this.sliderItems.length - defLength)
+            // if(Array(...test11).splice(1,copiesCount).length !== Array(...test22).splice(items-defLength,copiesCount).length){
+            //     console.log(test22.splice(defLength,copiesCount))
+            //     // console.log(defLength)
+                
+            // }else{
+            //     console.log(test22.splice(items-defLength,copiesCount))
+            // }
             // clone +1
             // length - clones 
             // no clone length - clone length 
