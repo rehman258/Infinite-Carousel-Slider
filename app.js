@@ -84,6 +84,7 @@ class Slider {
             if(Array(...test11).splice(1,copiesCount).length !== Array(...test22).splice(items-defLength,copiesCount).length){
                 console.log(test22.splice(defLength,copiesCount))
                 console.log(defLength)
+                
             }else{
                 console.log(test22.splice(items-defLength,copiesCount))
             }
