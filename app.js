@@ -220,6 +220,7 @@ class Slider {
             autoplay,
             autoplaySpeed,
         } = this.settings;
+        
 
         let lensLocalArray = window.getComputedStyle(this.lens).getPropertyValue('transform').split(',');
         this.lensPosition = parseInt(lensLocalArray[lensLocalArray.length-2]);
