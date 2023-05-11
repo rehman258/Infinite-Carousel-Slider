@@ -7,6 +7,7 @@ class Slider {
         this.lensPosition;
         this.lensStart;
         this.lensEnd;
+        this.isAnimating=false,
 
         this.sliderItems; 
         this.sliderItemsInitLength;
@@ -15,6 +16,7 @@ class Slider {
             margin:0,
             padding:0,
             step:1,
+            speed:1000,
             button:true,
             dost:false,
             loop:false,
@@ -25,7 +27,13 @@ class Slider {
         };
 
         this.prevBtn = document.createElement('BUTTON');
+        this.prevBtn.setAttribute('data-dir','prev')
+        
+        
         this.nextBtn = document.createElement('BUTTON');
+        this.nextBtn.setAttribute('data-dir','next')
+        
+        
     }
 
     _configSlider(){
@@ -35,6 +43,7 @@ class Slider {
             padding,
             step,
             button,
+            speed,
             dost,
             loop,
             auto,
@@ -51,6 +60,7 @@ class Slider {
         
         this.lens = document.createElement('div');
         this.lens.classList.add('slider-lens');
+        this.lens.style.transition=`all ${speed/1000}s ease`;
         // console.log()
 
         /**********************************************************/
@@ -60,7 +70,7 @@ class Slider {
         const defLength = this.sliderItems.length;
         for(let i=0; i<items-defLength; i++){
                 let clonedItem = this.sliderItems[i].cloneNode(true);
-                clonedItem.classList.add('cloned','viewItem');
+                clonedItem.classList.add('cloned');
                 this.sliderItems.push(clonedItem);
         }
 
@@ -97,7 +107,6 @@ class Slider {
                 rightSide = test22.splice(copiedItemsCount%defLength,copiesCount).map(item=>{
                     let clonedItem = item.cloneNode(true);
                     clonedItem.classList.add('cloned');
-                    clonedItem.classList.remove('viewItem')
                     return clonedItem
                 })
                 // console.log(copiedItemsCount - defLength) 
@@ -105,7 +114,6 @@ class Slider {
                 rightSide = test22.splice(0,copiesCount).map(item=>{
                     let clonedItem = item.cloneNode(true);
                     clonedItem.classList.add('cloned');
-                    clonedItem.classList.remove('viewItem')
                     return clonedItem
                 })
                 // console.log('bbb')
@@ -113,14 +121,17 @@ class Slider {
                 rightSide = test22.splice(copiedItemsCount,copiesCount).map(item=>{
                     let clonedItem = item.cloneNode(true);
                     clonedItem.classList.add('cloned');
-                    clonedItem.classList.remove('viewItem')
                     return clonedItem
                 })
             }
 
-
+            const classedActiveSliderItems = this.sliderItems.map((item,i)=>{
+                const classedActiveItem = item;
+                if(i<items) classedActiveItem.classList.add('active')
+                return classedActiveItem
+            })
            
-            this.sliderItems = leftSide.concat(this.sliderItems,rightSide)
+            this.sliderItems = leftSide.concat(classedActiveSliderItems,rightSide)
         }else{
             const copiesCount = Math.ceil(items/2)+Math.floor(step/2);
 
@@ -139,8 +150,15 @@ class Slider {
                 clonedItem.classList.add('cloned');
                 return clonedItem
             });
-            this.sliderItems = leftSide.concat(this.sliderItems,rightSide)
 
+            const classedActiveSliderItems = this.sliderItems.map((item,i)=>{
+                const classedActiveItem = item;
+                if(i<items) classedActiveItem.classList.add('active')
+                return classedActiveItem
+            })
+            this.sliderItems = leftSide.concat(classedActiveSliderItems,rightSide)
+
+            
         }
         
 
@@ -176,7 +194,7 @@ class Slider {
             this.nextBtn.innerHTML='>';
             this.slider.insertAdjacentElement('afterend',this.nextBtn);
             this.slider.insertAdjacentElement('afterend',this.prevBtn);
-            this._buttonEvents()
+            this._buttonEvents(this.settings)
         }
     }
 
@@ -195,22 +213,29 @@ class Slider {
 
     }
     
-    _buttonEvents(){
-        this.prevBtn.addEventListener('click',()=>{
-            this._lensMovement('prev')
+    _buttonEvents(settings){
+        this.prevBtn.addEventListener('click',(e)=>{
+            if(!this.isAnimating){
+                this.isAnimating = true;
+                this._lensMovement(e,settings)
+            }
         })
-        this.nextBtn.addEventListener('click',()=>{
-            this._lensMovement('next')
+        this.nextBtn.addEventListener('click',(e)=>{
+            if(!this.isAnimating){
+                this.isAnimating = true;
+                this._lensMovement(e,settings)
+            }
         })
     }
 
 
 
-    _lensMovement(lensDir){
+    _lensMovement(e,settings){
         const {
             items,
             margin,
             padding,
+            speed,
             step,
             button,
             dost,
@@ -219,23 +244,21 @@ class Slider {
             time,
             autoplay,
             autoplaySpeed,
-        } = this.settings;
-        
+        } = settings;
+
+        setTimeout(()=>{
+            this.isAnimating=false;
+        },speed)
 
         let lensLocalArray = window.getComputedStyle(this.lens).getPropertyValue('transform').split(',');
         this.lensPosition = parseInt(lensLocalArray[lensLocalArray.length-2]);
-        // console.log(this.lensPosition)
-        // // setTimeout(()=>{
-
-            if(lensDir==='next'){
-
-                this.lens.style.transform = `translate3d(${this.lensPosition-(this.sliderItemWidth*step)}px,0px,0px)`
             
-            }else{
-                this.lens.style.transform = `translate3d(${this.lensPosition+(this.sliderItemWidth*step)}px,0px,0px)`
-            }
-            // console.log(this.sliderItemWidth)
-        // },500)
+        if(e.target.dataset.dir==='next'){
+            this.lens.style.transform = `translate3d(${this.lensPosition-(this.sliderItemWidth*step)}px,0px,0px)`
+        }else{
+            this.lens.style.transform = `translate3d(${this.lensPosition+(this.sliderItemWidth*step)}px,0px,0px)`
+        }
+
     }
 
     _startPosition(){
@@ -243,7 +266,7 @@ class Slider {
     }
 
     _resetPosition(){
-
+        console.log('aaa')
     }
 
 

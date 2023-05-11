@@ -14,8 +14,6 @@ body{
     /* background-color: ; */
     width: 13660px;
     /* display: flex; */
-    transition: all .5s ease;
-
 }
 .slider-container .slider-lens .slider-item{
     /* background-color: ; */
