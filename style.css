@@ -6,13 +6,12 @@ body{
 
 .slider-container{
     width: 100%;
-    border: .5px solid grey;
     padding:10px 0px;
+    overflow: hidden;
 }
 
 .slider-lens{
     /* background-color: ; */
-    width: 13660px;
     /* display: flex; */
 }
 .slider-container .slider-lens .slider-item{

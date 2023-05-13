@@ -4,7 +4,6 @@ class Slider {
         this.sliderWidth;
         
         this.lens;
-        this.lensPosition;
         this.lensStart;
         this.lensEnd;
         this.isAnimating=false,
@@ -65,6 +64,8 @@ class Slider {
 
         /**********************************************************/
         /**********************************************************/
+
+        
 
         // slider filling empyty items places with exist items
         const defLength = this.sliderItems.length;
@@ -160,7 +161,6 @@ class Slider {
 
             
         }
-        
 
         
 
@@ -168,7 +168,7 @@ class Slider {
         /**********************************************************/
             
         // declare start and end positions
-        this.sliderItemWidth = this.slider.clientWidth/items;
+        this.sliderItemWidth = Math.round(this.slider.clientWidth/items);
 
         this.lensStart =- leftSide.length * this.sliderItemWidth;
         // this.lensEnd = sliderItems.length * this.sliderItemWidth;
@@ -209,6 +209,8 @@ class Slider {
 
         this._configSlider();
 
+        this.lens.style.width = `${this.sliderItems.length*Math.round(this.sliderItemWidth)}px`
+        // console.log(this.sliderItems.length,this.sliderItemWidth)
         this.slider.append(this.lens)
 
     }
@@ -251,13 +253,17 @@ class Slider {
         },speed)
 
         let lensLocalArray = window.getComputedStyle(this.lens).getPropertyValue('transform').split(',');
-        this.lensPosition = parseInt(lensLocalArray[lensLocalArray.length-2]);
+        const lensPosition = parseInt(lensLocalArray[lensLocalArray.length-2]);
             
         if(e.target.dataset.dir==='next'){
-            this.lens.style.transform = `translate3d(${this.lensPosition-(this.sliderItemWidth*step)}px,0px,0px)`
+            this.lens.style.transform = `translate3d(${lensPosition-(this.sliderItemWidth*step)}px,0px,0px)`
         }else{
-            this.lens.style.transform = `translate3d(${this.lensPosition+(this.sliderItemWidth*step)}px,0px,0px)`
+            this.lens.style.transform = `translate3d(${lensPosition+(this.sliderItemWidth*step)}px,0px,0px)`
         }
+
+        // const lensPosition = window.getComputedStyle(this.lens).getPropertyValue('transform').split(',');
+        console.log(lensPosition)
+        console.log(this.lens.style.width)
 
     }
 
