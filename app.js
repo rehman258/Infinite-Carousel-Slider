@@ -82,10 +82,10 @@ class Slider {
 
         let rightSide=[];
         let leftSide=[];
+        const copiesCount = Math.ceil(items/2)+Math.floor(step/2);
 
         if(this.sliderItemsInitLength < items){
 
-            const copiesCount = Math.ceil(items/2)+Math.floor(step/2);
             // console.log(copiesCount)
             let test11 = [...this.sliderItems];
             let test22 = [...this.sliderItems];
@@ -134,7 +134,6 @@ class Slider {
            
             this.sliderItems = leftSide.concat(classedActiveSliderItems,rightSide)
         }else{
-            const copiesCount = Math.ceil(items/2)+Math.floor(step/2);
 
             const firstSide = [...this.sliderItems];
             const secondSide = [...this.sliderItems];
@@ -262,8 +261,10 @@ class Slider {
         }
 
         // const lensPosition = window.getComputedStyle(this.lens).getPropertyValue('transform').split(',');
-        console.log(lensPosition)
-        console.log(this.lens.style.width)
+        // console.log(lensPosition)
+        // console.log(this.lens.style.width)
+
+        console.log(this.sliderItems.length)
 
     }
 
