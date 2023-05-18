@@ -256,6 +256,17 @@ class Slider {
         const lensPosition = parseInt(lensLocalArray[lensLocalArray.length-2]);
             
         if(e.target.dataset.dir==='next'){
+            // console.log(this.sliderItems)
+            // console.log(step)
+            // console.log()
+            // console.log()
+            const testList  = document.querySelector(`.${this.lens.className}`).children;
+            for(let i =0;i<testList.length;i++){
+                console.log(testList[i])
+            }
+            // for(this.sliderItems){
+
+            // }
             this.lens.style.transform = `translate3d(${lensPosition-(this.sliderItemWidth*step)}px,0px,0px)`
         }else{
             this.lens.style.transform = `translate3d(${lensPosition+(this.sliderItemWidth*step)}px,0px,0px)`
