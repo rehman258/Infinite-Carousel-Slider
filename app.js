@@ -10,6 +10,7 @@ class Slider {
 
         this.sliderItems; 
         this.sliderItemsInitLength;
+        this.sideClonesLength;
         this.settings={
             items:1,
             margin:0,
@@ -83,7 +84,7 @@ class Slider {
         let rightSide=[];
         let leftSide=[];
         const copiesCount = Math.ceil(items/2)+Math.floor(step/2);
-
+        this.sideClonesLength = copiesCount;
         if(this.sliderItemsInitLength < items){
 
             // console.log(copiesCount)
@@ -260,10 +261,14 @@ class Slider {
             // console.log(step)
             // console.log()
             // console.log()
-            const testList  = document.querySelector(`.${this.lens.className}`).children;
-            for(let i =0;i<testList.length;i++){
-                console.log(testList[i])
-            }
+            // const testList  = document.querySelector(`.${this.lens.className}`).childrenjih;
+            // for(let i =0;i<testList.length;i++){
+            //     console.log(testList[i])
+            // }
+            // console.log(this.sliderItems.shift(6))
+            const newTestList = [...this.sliderItems];
+            newTestList.splice(0,(this.sliderItems.length-this.sideClonesLength)-(this.sliderItemsInitLength-(this.sliderItemsInitLength-this.sideClonesLength)))
+            console.log(newTestList)
             // for(this.sliderItems){
 
             // }
@@ -276,7 +281,7 @@ class Slider {
         // console.log(lensPosition)
         // console.log(this.lens.style.width)
 
-        console.log(this.sliderItems.length)
+        // console.log(this.sliderItems.length)
 
     }
 
