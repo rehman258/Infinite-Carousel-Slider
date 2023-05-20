@@ -257,23 +257,52 @@ class Slider {
         const lensPosition = parseInt(lensLocalArray[lensLocalArray.length-2]);
             
         if(e.target.dataset.dir==='next'){
-            // console.log(this.sliderItems)
-            // console.log(step)
-            // console.log()
-            // console.log()
-            // const testList  = document.querySelector(`.${this.lens.className}`).childrenjih;
-            // for(let i =0;i<testList.length;i++){
-            //     console.log(testList[i])
+            
+            // let activeFound = 0;
+
+            // for(let i =0;i<this.sliderItems.length;i++){
+            //     if(this.sliderItems[i].classList.contains('active') && activeFound<items){
+            //         activeFound++
+            //         this.sliderItems[i].classList.remove('active');
+            //         this.sliderItems[i+step].classList.add('active');
+            //     }
             // }
-            // console.log(this.sliderItems.shift(6))
+
+            let activeFound = 0;
+            for(let j =0;j<this.sliderItems.length;j++){
+                // if(this.sliderItems[j].classList.contains('active') && activeFound < items){
+                    activeFound++
+
+                    
+                    // console.log(this.sliderItems[j+step])
+                        // console.log(this.sliderItems[j+step])
+                    // console.log(this.sliderItems.length-this.sideClonesLength)
+                    if(this.sliderItems.length-this.sideClonesLength-activeFound > step){
+
+                        // this.sliderItems[j-step-1].classList.remove('active');
+                        // this.sliderItems[j+step].classList.add('active');
+                        // activeFound++
+                        // console.log('next')
+                        
+
+                        // this.lens.style.transform = `translate3d(${lensPosition-(this.sliderItemWidth*step)}px,0px,0px)`
+
+                        // console.log(this.sliderItems[j])
+                        // console.log(this.sliderItems)
+                       
+                    }else{
+                        console.log('no next')
+                    }
+                // }
+            }
+            
             const newTestList = [...this.sliderItems];
             newTestList.splice(0,(this.sliderItems.length-this.sideClonesLength)-(this.sliderItemsInitLength-(this.sliderItemsInitLength-this.sideClonesLength)))
-            console.log(newTestList)
-            // for(this.sliderItems){
 
-            // }
+            
             this.lens.style.transform = `translate3d(${lensPosition-(this.sliderItemWidth*step)}px,0px,0px)`
-        }else{
+        
+        }else if(e.target.dataset.dir==='prev'){
             this.lens.style.transform = `translate3d(${lensPosition+(this.sliderItemWidth*step)}px,0px,0px)`
         }
 
