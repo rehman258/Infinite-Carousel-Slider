@@ -255,52 +255,34 @@ class Slider {
 
         let lensLocalArray = window.getComputedStyle(this.lens).getPropertyValue('transform').split(',');
         const lensPosition = parseInt(lensLocalArray[lensLocalArray.length-2]);
-            
+        
         if(e.target.dataset.dir==='next'){
             
-            // let activeFound = 0;
-
-            // for(let i =0;i<this.sliderItems.length;i++){
-            //     if(this.sliderItems[i].classList.contains('active') && activeFound<items){
-            //         activeFound++
-            //         this.sliderItems[i].classList.remove('active');
-            //         this.sliderItems[i+step].classList.add('active');
-            //     }
-            // }
-
-            let activeFound = 0;
-            for(let j =0;j<this.sliderItems.length;j++){
-                // if(this.sliderItems[j].classList.contains('active') && activeFound < items){
-                    activeFound++
-
-                    
-                    // console.log(this.sliderItems[j+step])
-                        // console.log(this.sliderItems[j+step])
-                    // console.log(this.sliderItems.length-this.sideClonesLength)
-                    if(this.sliderItems.length-this.sideClonesLength-activeFound > step){
-
-                        // this.sliderItems[j-step-1].classList.remove('active');
-                        // this.sliderItems[j+step].classList.add('active');
-                        // activeFound++
-                        // console.log('next')
-                        
-
-                        // this.lens.style.transform = `translate3d(${lensPosition-(this.sliderItemWidth*step)}px,0px,0px)`
-
-                        // console.log(this.sliderItems[j])
-                        // console.log(this.sliderItems)
-                       
-                    }else{
-                        console.log('no next')
-                    }
-                // }
+            let lastPosition;    
+            for(let i=0;i<this.sliderItems.length;i++){
+                if(this.sliderItems[i].classList.contains('active')){
+                    lastPosition=i+1;
+                }
             }
             
+            if(this.sliderItems.length >= lastPosition+step){
+                let nextActive=0;
+                for(let j=0;j<this.sliderItems.length;j++){
+                    if(this.sliderItems[j].classList.contains('active') && nextActive<step){
+                        nextActive++
+                        this.sliderItems[j].classList.remove('active');
+                        this.sliderItems[j+items].classList.add('active');
+                        this.lens.style.transform = `translate3d(${lensPosition-(this.sliderItemWidth*step)}px,0px,0px)`
+                    }
+                }
+            }
+
+            
+
             const newTestList = [...this.sliderItems];
             newTestList.splice(0,(this.sliderItems.length-this.sideClonesLength)-(this.sliderItemsInitLength-(this.sliderItemsInitLength-this.sideClonesLength)))
 
             
-            this.lens.style.transform = `translate3d(${lensPosition-(this.sliderItemWidth*step)}px,0px,0px)`
         
         }else if(e.target.dataset.dir==='prev'){
             this.lens.style.transform = `translate3d(${lensPosition+(this.sliderItemWidth*step)}px,0px,0px)`
