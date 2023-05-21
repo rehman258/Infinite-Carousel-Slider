@@ -275,6 +275,13 @@ class Slider {
                         this.lens.style.transform = `translate3d(${lensPosition-(this.sliderItemWidth*step)}px,0px,0px)`
                     }
                 }
+            }else {
+                // console.log()
+                if(items > this.sliderItemsInitLength){
+                    console.log(items -this.sliderItemsInitLength)
+                }else{
+                    console.log(this.sideClonesLength)
+                }
             }
 
             
@@ -285,6 +292,7 @@ class Slider {
             
         
         }else if(e.target.dataset.dir==='prev'){
+            
             this.lens.style.transform = `translate3d(${lensPosition+(this.sliderItemWidth*step)}px,0px,0px)`
         }
 
@@ -296,9 +304,9 @@ class Slider {
 
     }
 
-    _startPosition(){
+    // _startPosition(){
 
-    }
+    // }
 
     _resetPosition(){
         console.log('aaa')
