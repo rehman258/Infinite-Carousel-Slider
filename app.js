@@ -278,9 +278,21 @@ class Slider {
             }else {
                 // console.log()
                 if(items > this.sliderItemsInitLength){
-                    console.log(items -this.sliderItemsInitLength)
+                    // console.log(items -this.sliderItemsInitLength)
+                    for(let j=0;j<this.sliderItems.length;j++){
+                        if(this.sliderItems[j].classList.contains('active')){
+                            // return console.log(this.sliderItemWidth,(j-this.sliderItemsInitLength-this.sideClonesLength))
+                            // this.lens.style.transition='all 0s ease'
+                            this.lens.style.transform = `translate3d(${-this.sliderItemWidth*(j-this.sliderItemsInitLength*2)}px,0px,0px)`
+                            return
+                        }
+                    }
                 }else{
-                    console.log(this.sideClonesLength)
+                    for(let j=0;j<this.sliderItems.length;j++){
+                        if(this.sliderItems[j].classList.contains('active') && nextActive<step){
+                            return console.log(j)
+                        }
+                    }
                 }
             }
 
