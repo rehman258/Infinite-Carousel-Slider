@@ -286,6 +286,7 @@ class Slider {
                             this.lens.style.transform = `translate3d(${-this.sliderItemWidth*(j-this.sliderItemsInitLength*2)}px,0px,0px)`
                             return
                         }
+                      
                         
                     }
                 }else{
