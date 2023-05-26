@@ -94,7 +94,7 @@ class Slider {
             let copiedItemsCount = this.sliderItems.length-defLength; 
             // console.log()
             // console.log()
-            leftSide = Array.from(test11).reverse().splice(this.sliderItems.length-this.sliderItemsInitLength,copiesCount).map(item=>{
+            leftSide = Array.from(test11).reverse().splice(copiedItemsCount,copiesCount).map(item=>{
                 let clonedItem = item.cloneNode(true);
                 clonedItem.classList.add('cloned','leftItem');
                 return clonedItem
@@ -103,10 +103,9 @@ class Slider {
             // const rightCloning =(list)=>{
 
             // }
-            
             if(copiedItemsCount > defLength){
-              
-                rightSide = test22.splice(copiedItemsCount%defLength,copiesCount).map(item=>{
+                console.log(copiedItemsCount)
+                rightSide = test22.splice(copiedItemsCount-defLength,copiesCount).map(item=>{
                     let clonedItem = item.cloneNode(true);
                     clonedItem.classList.add('cloned');
                     return clonedItem
@@ -118,7 +117,6 @@ class Slider {
                     clonedItem.classList.add('cloned');
                     return clonedItem
                 })
-                // console.log('bbb')
             }else {
 
                 rightSide = test22.splice(copiedItemsCount,copiesCount).map(item=>{
@@ -276,7 +274,7 @@ class Slider {
                     }
                 }
             }else {
-                // console.log()
+                console.log('a')
                 if(items > this.sliderItemsInitLength){
                     // console.log(items -this.sliderItemsInitLength)
                     for(let j=0;j<this.sliderItems.length;j++){
