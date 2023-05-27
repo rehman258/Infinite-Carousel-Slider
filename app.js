@@ -262,7 +262,7 @@ class Slider {
                     lastPosition=i+1;
                 }
             }
-            
+            // console.log(lastPosition)
             if(this.sliderItems.length >= lastPosition+step){
                 let nextActive=0;
                 for(let j=0;j<this.sliderItems.length;j++){
@@ -274,8 +274,8 @@ class Slider {
                     }
                 }
             }else {
-                console.log('a')
                 if(items > this.sliderItemsInitLength){
+                    console.log('aaa')
                     // console.log(items -this.sliderItemsInitLength)
                     for(let j=0;j<this.sliderItems.length;j++){
                         if(this.sliderItems[j].classList.contains('active')){
