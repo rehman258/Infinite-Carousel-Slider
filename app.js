@@ -318,6 +318,7 @@ class Slider {
                         // console.log(this.sliderItems[j])
                         this.sliderItems[j].classList.remove('active');
                         // console.log(j-items)
+                        
                         this.sliderItems[j-items].classList.add('active');
                         this.lens.style.transform = `translate3d(${lensPosition+(this.sliderItemWidth*step)}px,0px,0px)`
 
