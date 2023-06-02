@@ -306,13 +306,11 @@ class Slider {
                     firstPosition=i+1;
                 }
             }
-            if(step < firstPosition-step){
+            console.log(firstPosition)
+            if(step < firstPosition){
                 // console.log('it is ok')
                 let nextActive = 0;
                 for(let j=this.sliderItems.length-1;j>=0;j--){
-                    // console.log(j)
-                    // 
-                    // console.log(this.sliderItems[j])
                     if(this.sliderItems[j].classList.contains('active') && nextActive < step){
                         nextActive++
                         // console.log(this.sliderItems[j])
