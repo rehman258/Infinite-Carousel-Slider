@@ -275,27 +275,27 @@ class Slider {
                     }
                 }
             }else{
-                let firstActivePosition=0;
+                let lastActivePosition=0;
                 for(let j=0;j<this.sliderItems.length;j++){
                     // console.log(nextActive)
-                    if(this.sliderItems[j].classList.contains('active') &&  firstActivePosition === 0){
-                        firstActivePosition=j
+                    if(this.sliderItems[j].classList.contains('active') &&  lastActivePosition === 0){
+                        lastActivePosition=j
                     }
                 }
                 do{
-                    firstActivePosition = firstActivePosition-this.sliderItemsInitLength;
-                }while(firstActivePosition>=this.sliderItemsInitLength)
+                    lastActivePosition = lastActivePosition-this.sliderItemsInitLength;
+                }while(lastActivePosition>=this.sliderItemsInitLength)
 
                 // resetting slider to 
                 this.sliderItems.forEach(slItem=>{
                     slItem.classList.remove('active')
                 })
                 for(let j=0;j<this.sliderItems.length;j++){
-                    if(j+1 > firstActivePosition && j+1 <= items+firstActivePosition){
+                    if(j+1 > lastActivePosition && j+1 <= items+lastActivePosition){
                         this.sliderItems[j].classList.add('active');
                     }
                 }
-                this.lens.style.transform = `translate3d(${-firstActivePosition*this.sliderItemWidth}px,0px,0px)`
+                this.lens.style.transform = `translate3d(${-lastActivePosition*this.sliderItemWidth}px,0px,0px)`
             }
         
         }else if(e.target.dataset.dir==='prev'){
@@ -306,16 +306,14 @@ class Slider {
                     firstPosition=i+1;
                 }
             }
-            console.log(firstPosition)
+            // console.log(firstPosition)
             if(step < firstPosition){
                 // console.log('it is ok')
                 let nextActive = 0;
                 for(let j=this.sliderItems.length-1;j>=0;j--){
                     if(this.sliderItems[j].classList.contains('active') && nextActive < step){
                         nextActive++
-                        // console.log(this.sliderItems[j])
                         this.sliderItems[j].classList.remove('active');
-                        // console.log(j-items)
                         
                         this.sliderItems[j-items].classList.add('active');
                         this.lens.style.transform = `translate3d(${lensPosition+(this.sliderItemWidth*step)}px,0px,0px)`
@@ -324,26 +322,28 @@ class Slider {
                     }
                 }
             }else{
-            //     let firstActivePosition=0;
-            //     for(let j=0;j<this.sliderItems.length;j++){
-            //         // console.log(nextActive)
-            //         if(this.sliderItems[j].classList.contains('active') &&  firstActivePosition === 0){
-            //             firstActivePosition=j
-            //         }
-            //     }
-            //     do{
-            //         firstActivePosition = firstActivePosition-this.sliderItemsInitLength;
-            //     }while(firstActivePosition>=this.sliderItemsInitLength)
+                
+                let lastActivePosition=0;
+                for(let j=0;j<this.sliderItems.length;j++){
+                    if(this.sliderItems[j].classList.contains('active')){
+                        lastActivePosition=j
+                    }
+                }
+                console.log(lastActivePosition)
 
+                // do{
+                //     lastActivePosition = lastActivePosition+this.sliderItemsInitLength;
+                //     console.log(lastActivePosition)
+                // }while(lastActivePosition < this.sliderItems.length)
             //     this.sliderItems.forEach(slItem=>{
             //         slItem.classList.remove('active')
             //     })
             //     for(let j=0;j<this.sliderItems.length;j++){
-            //         if(j+1 > firstActivePosition && j+1 <= items+firstActivePosition){
+            //         if(j+1 > lastActivePosition && j+1 <= items+lastActivePosition){
             //             this.sliderItems[j].classList.add('active');
             //         }
             //     }
-            //     this.lens.style.transform = `translate3d(${-firstActivePosition*this.sliderItemWidth}px,0px,0px)`
+            //     this.lens.style.transform = `translate3d(${-lastActivePosition*this.sliderItemWidth}px,0px,0px)`
             }
 
         }
