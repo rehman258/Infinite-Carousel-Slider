@@ -322,28 +322,48 @@ class Slider {
                     }
                 }
             }else{
-                
+                let activeStep=0;
+
+                let firstActivePosition=0;
                 let lastActivePosition=0;
                 for(let j=0;j<this.sliderItems.length;j++){
-                    if(this.sliderItems[j].classList.contains('active')){
+                    if(this.sliderItems[j].classList.contains('active') && activeStep===0){
+                        firstActivePosition=j
+                        activeStep++
+                    }else if(this.sliderItems[j].classList.contains('active')){
                         lastActivePosition=j
                     }
                 }
-                console.log(lastActivePosition)
+                do{
+                    // console.log(this.sliderItems.length)
+                    // console.log(this.sliderItemsInitLength)
+                    // console.log(lastActivePosition)
+                    // console.log(this.sliderItems.length-(lastActivePosition+this.sliderItemsInitLength))
+                    // console.log(lastActivePosition+this.sliderItemsInitLength)
+
+                    firstActivePosition+=this.sliderItemsInitLength;
+                    // this.sliderItems[firstActivePosition+step].style.backgroundColor='red'
+                    lastActivePosition+=this.sliderItemsInitLength;
+                    // console.log(firstActivePosition,lastActivePosition+step)
+                }while(this.sliderItems.length-lastActivePosition>=this.sliderItemsInitLength)
+                console.log(firstActivePosition);
 
                 // do{
                 //     lastActivePosition = lastActivePosition+this.sliderItemsInitLength;
                 //     console.log(lastActivePosition)
                 // }while(lastActivePosition < this.sliderItems.length)
-            //     this.sliderItems.forEach(slItem=>{
-            //         slItem.classList.remove('active')
-            //     })
-            //     for(let j=0;j<this.sliderItems.length;j++){
-            //         if(j+1 > lastActivePosition && j+1 <= items+lastActivePosition){
-            //             this.sliderItems[j].classList.add('active');
-            //         }
-            //     }
-            //     this.lens.style.transform = `translate3d(${-lastActivePosition*this.sliderItemWidth}px,0px,0px)`
+                
+                this.sliderItems.forEach(slItem=>{
+                    slItem.classList.remove('active')
+                })
+
+                for(let j=firstActivePosition;j<lastActivePosition;j++){
+
+                    // if(j+1 > lastActivePosition && j+1 <= items+lastActivePosition){
+                        this.sliderItems[j].classList.add('active');
+                    // }
+                }
+                this.lens.style.transform = `translate3d(${-firstActivePosition*this.sliderItemWidth}px,0px,0px)`
             }
 
         }
