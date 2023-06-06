@@ -11,14 +11,14 @@ body{
 }
 
 .slider-lens{
+    display: none;
+
     /* background-color: ; */
     /* display: flex; */
 }
 .slider-container .slider-lens .slider-item{
     /* background-color: ; */
     /* width: 1366px; */
-    display: inline-block;
-
     background-color: lightgrey;
 
     /* border:.5px solid lightgrey; */

@@ -69,6 +69,7 @@ class Slider {
         
 
         // slider filling empyty items places with exist items
+        // Filling-Slider**
         const defLength = this.sliderItems.length;
         for(let i=0; i<items-defLength; i++){
                 let clonedItem = this.sliderItems[i].cloneNode(true);
@@ -80,46 +81,56 @@ class Slider {
         /**********************************************************/
 
         // clone element both sides for appding to before and end 
-
         let rightSide=[];
         let leftSide=[];
+
+        // this calculation work well decide to how many item will copy each side
+        // never can be problem with that way 
+        // could be easer way but this is clearer  
         const copiesCount = Math.ceil(items/2)+Math.floor(step/2);
         this.sideClonesLength = copiesCount;
+
+
+        //  slider will fill all empty places altough items:4 but u have 3 item in slider in html 
+        //  if block will compare what was the count of slider items before fill 
+        //  if block will work if your initial leng is smaller than given count to items key
         if(this.sliderItemsInitLength < items){
 
-            // console.log(copiesCount)
-            let test11 = [...this.sliderItems];
-            let test22 = [...this.sliderItems];
-            // console.log('aa')
+            let leftArr = [...this.sliderItems];
+            let rightArr = [...this.sliderItems];
+
+            // in this case is copping works well for right clines ,
+            //  that doesn't bug or any problem it is ok all the way
+            // even altought it can be fine copy items count on screen to left and right side 
+            // this way avoid to "reset slider" position for infinite  
+
             let copiedItemsCount = this.sliderItems.length-defLength; 
-            // console.log()
-            // console.log()
-            leftSide = Array.from(test11).reverse().splice(copiedItemsCount,copiesCount).map(item=>{
+            leftSide = Array.from(leftArr).reverse().splice(copiedItemsCount,copiesCount).map(item=>{
                 let clonedItem = item.cloneNode(true);
                 clonedItem.classList.add('cloned');
                 return clonedItem
             })
             
-            // const rightCloning =(list)=>{
-
-            // }
+            // cloning right side items with together filled items 
+            //  filled items mean is if items key's value is 4 but you have 3 items in slider ,
+            // search Filling-Slider** and look at there , code will fill 1 of empty place of slider 
             if(copiedItemsCount > defLength){
                 console.log(copiedItemsCount)
-                rightSide = test22.splice(copiedItemsCount-defLength,copiesCount).map(item=>{
+                rightSide = rightArr.splice(copiedItemsCount-defLength,copiesCount).map(item=>{
                     let clonedItem = item.cloneNode(true);
                     clonedItem.classList.add('cloned');
                     return clonedItem
                 })
                 // console.log(copiedItemsCount - defLength) 
             }else if(copiedItemsCount === defLength){
-                rightSide = test22.splice(0,copiesCount).map(item=>{
+                rightSide = rightArr.splice(0,copiesCount).map(item=>{
                     let clonedItem = item.cloneNode(true);
                     clonedItem.classList.add('cloned');
                     return clonedItem
                 })
             }else {
 
-                rightSide = test22.splice(copiedItemsCount,copiesCount).map(item=>{
+                rightSide = rightArr.splice(copiedItemsCount,copiesCount).map(item=>{
                     let clonedItem = item.cloneNode(true);
                     clonedItem.classList.add('cloned');
                     return clonedItem
@@ -134,7 +145,8 @@ class Slider {
            
             this.sliderItems = Array.from(leftSide).reverse().concat(classedActiveSliderItems,rightSide)
         }else{
-
+            //  else block is simpler 
+            //  getting slider items and copy it with copies count and adding they to slider
             const firstSide = [...this.sliderItems];
             const secondSide = [...this.sliderItems];
 
@@ -158,26 +170,25 @@ class Slider {
             })
             this.sliderItems = leftSide.concat(classedActiveSliderItems,rightSide)
 
-            
         }
 
         
 
         /**********************************************************/
         /**********************************************************/
-            
-        // declare start and end positions
+        // Calculate slider item width according to screen wiwdth divide items count
+        /**********************************************************/
+        /**********************************************************/
         this.sliderItemWidth = Math.round(this.slider.clientWidth/items);
 
-        this.lensStart =- leftSide.length * this.sliderItemWidth;
-        // this.lensEnd = sliderItems.length * this.sliderItemWidth;
-
         // set start position
+        this.lensStart =- leftSide.length * this.sliderItemWidth;
         this.lens.style.transform= `translate3d(${this.lensStart}px,0px,0px)`;
 
         // adding slider item's width after calculation above
         this.sliderItems.forEach(sliderItem=>{
             sliderItem.style.width=`${this.sliderItemWidth}px`;
+            this.lens.style.display=`flex`;
             this.lens.append(sliderItem);
         })
 
@@ -197,7 +208,8 @@ class Slider {
         }
     }
 
-    
+    //  when the slider start 
+    // functions inside in init will prepare slider for ui
     init(containerClass,settings){
         if(settings){
             this.settings=settings;
@@ -209,7 +221,6 @@ class Slider {
         this._configSlider();
 
         this.lens.style.width = `${this.sliderItems.length*Math.round(this.sliderItemWidth)}px`
-        // console.log(this.sliderItems.length,this.sliderItemWidth)
         this.slider.append(this.lens)
 
     }
@@ -277,7 +288,6 @@ class Slider {
             }else{
                 let lastActivePosition=0;
                 for(let j=0;j<this.sliderItems.length;j++){
-                    // console.log(nextActive)
                     if(this.sliderItems[j].classList.contains('active') &&  lastActivePosition === 0){
                         lastActivePosition=j
                     }
@@ -306,9 +316,7 @@ class Slider {
                     firstPosition=i+1;
                 }
             }
-            // console.log(firstPosition)
             if(step < firstPosition){
-                // console.log('it is ok')
                 let nextActive = 0;
                 for(let j=this.sliderItems.length-1;j>=0;j--){
                     if(this.sliderItems[j].classList.contains('active') && nextActive < step){
@@ -318,7 +326,6 @@ class Slider {
                         this.sliderItems[j-items].classList.add('active');
                         this.lens.style.transform = `translate3d(${lensPosition+(this.sliderItemWidth*step)}px,0px,0px)`
 
-                        // this.lens.style.transform = `translate3d(${-lensPosition-(this.sliderItemWidth*step)}px,0px,0px)`
                     }
                 }
             }else{
@@ -335,50 +342,27 @@ class Slider {
                     }
                 }
                 do{
-                    // console.log(this.sliderItems.length)
-                    // console.log(this.sliderItemsInitLength)
-                    // console.log(lastActivePosition)
-                    // console.log(this.sliderItems.length-(lastActivePosition+this.sliderItemsInitLength))
-                    // console.log(lastActivePosition+this.sliderItemsInitLength)
-
+                    
                     firstActivePosition+=this.sliderItemsInitLength;
-                    // this.sliderItems[firstActivePosition+step].style.backgroundColor='red'
                     lastActivePosition+=this.sliderItemsInitLength;
-                    // console.log(firstActivePosition,lastActivePosition+step)
-                }while(this.sliderItems.length-lastActivePosition>=this.sliderItemsInitLength)
-                console.log(firstActivePosition);
 
-                // do{
-                //     lastActivePosition = lastActivePosition+this.sliderItemsInitLength;
-                //     console.log(lastActivePosition)
-                // }while(lastActivePosition < this.sliderItems.length)
+                }while(this.sliderItems.length-lastActivePosition>=this.sliderItemsInitLength)
+               
                 
                 this.sliderItems.forEach(slItem=>{
                     slItem.classList.remove('active')
                 })
 
-                for(let j=firstActivePosition;j<lastActivePosition;j++){
-
-                    // if(j+1 > lastActivePosition && j+1 <= items+lastActivePosition){
+                for(let j=firstActivePosition;j<=lastActivePosition;j++){
                         this.sliderItems[j].classList.add('active');
-                    // }
                 }
                 this.lens.style.transform = `translate3d(${-firstActivePosition*this.sliderItemWidth}px,0px,0px)`
             }
 
         }
 
-        // const lensPosition = window.getComputedStyle(this.lens).getPropertyValue('transform').split(',');
-        // console.log(lensPosition)
-        // console.log(this.lens.style.width)
-
-        // console.log(this.sliderItems.length)
 
     }
-
-    // _startPosition(){
-
-    // }
 
     _resetPosition(){
         console.log('aaa')
