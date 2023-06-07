@@ -289,26 +289,53 @@ class Slider {
                     }
                 }
             }else{
-                let lastActivePosition=0;
-                for(let j=0;j<this.sliderItems.length;j++){
-                    if(this.sliderItems[j].classList.contains('active') &&  lastActivePosition === 0){
-                        lastActivePosition=j
+                new Promise((res,rej)=>{
+                    let lastActivePosition=0;
+                    for(let j=0;j<this.sliderItems.length;j++){
+                        if(this.sliderItems[j].classList.contains('active') &&  lastActivePosition === 0){
+                            lastActivePosition=j
+                        }
                     }
-                }
-                do{
-                    lastActivePosition = lastActivePosition-this.sliderItemsInitLength;
-                }while(lastActivePosition>=this.sliderItemsInitLength)
+                    do{
+                        lastActivePosition = lastActivePosition-this.sliderItemsInitLength;
+                    }while(lastActivePosition>=this.sliderItemsInitLength)
 
-                // resetting slider to 
-                this.sliderItems.forEach(slItem=>{
-                    slItem.classList.remove('active')
-                })
-                for(let j=0;j<this.sliderItems.length;j++){
-                    if(j+1 > lastActivePosition && j+1 <= items+lastActivePosition){
-                        this.sliderItems[j].classList.add('active');
+                    // resetting slider to 
+                    this.sliderItems.forEach(slItem=>{
+                        slItem.classList.remove('active')
+                    })
+                    for(let j=0;j<this.sliderItems.length;j++){
+                        if(j+1 > lastActivePosition && j+1 <= items+lastActivePosition){
+                            this.sliderItems[j].classList.add('active');
+                        }
                     }
-                }
-                this.lens.style.transform = `translate3d(${-lastActivePosition*this.sliderItemWidth}px,0px,0px)`
+                    this.lens.style.transition='all 0s ease'
+                    this.lens.style.transform = `translate3d(${-lastActivePosition*this.sliderItemWidth}px,0px,0px)`
+                    res()
+                }).then(()=>{
+                    
+                    let lensLocalArray = window.getComputedStyle(this.lens).getPropertyValue('transform').split(',');
+                    const lensPosition = parseInt(lensLocalArray[lensLocalArray.length-2]);
+                    let lastPosition;    
+                    
+                    for(let i=0;i<this.sliderItems.length;i++){
+                        if(this.sliderItems[i].classList.contains('active')){
+                            lastPosition=i+1;
+                        }
+                    }
+
+                    let nextActive=0;
+                    for(let j=0;j<this.sliderItems.length;j++){
+                        if(this.sliderItems[j].classList.contains('active') && nextActive < step){
+                            nextActive++
+                            this.sliderItems[j].classList.remove('active');
+                            this.sliderItems[j+items].classList.add('active');
+                            this.lens.style.transition=`all ${speed/1000}s ease`;
+                            this.lens.style.transform = `translate3d(${lensPosition-(this.sliderItemWidth*step)}px,0px,0px)`
+                        }
+                    }
+                })
+                
             }
         
         }else if(e.target.dataset.dir==='prev'){
