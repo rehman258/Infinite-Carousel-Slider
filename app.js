@@ -188,7 +188,7 @@ class Slider {
         // adding slider item's width after calculation above
         this.sliderItems.forEach(sliderItem=>{
             sliderItem.style.width=`${this.sliderItemWidth}px`;
-            this.lens.style.display=`flex`;
+            this.lens.style.display=`flexx`;
             this.lens.append(sliderItem);
         })
 
@@ -212,7 +212,10 @@ class Slider {
     // functions inside in init will prepare slider for ui
     init(containerClass,settings){
         if(settings){
-            this.settings=settings;
+            this.settings={
+                ...this.settings,
+                ...settings
+            };
         }
         
         this.slider = document.querySelector(containerClass);
@@ -329,34 +332,76 @@ class Slider {
                     }
                 }
             }else{
-                let activeStep=0;
+                new Promise((res,rej)=>{
+                    let activeStep=0;
 
-                let firstActivePosition=0;
-                let lastActivePosition=0;
-                for(let j=0;j<this.sliderItems.length;j++){
-                    if(this.sliderItems[j].classList.contains('active') && activeStep===0){
-                        firstActivePosition=j
-                        activeStep++
-                    }else if(this.sliderItems[j].classList.contains('active')){
-                        lastActivePosition=j
+                    let firstActivePosition=0;
+                    let lastActivePosition=0;
+                    for(let j=0;j<this.sliderItems.length;j++){
+                        if(this.sliderItems[j].classList.contains('active') && activeStep===0){
+                            firstActivePosition=j
+                            activeStep++
+                        }else if(this.sliderItems[j].classList.contains('active')){
+                            lastActivePosition=j
+                        }
                     }
-                }
-                do{
-                    
-                    firstActivePosition+=this.sliderItemsInitLength;
-                    lastActivePosition+=this.sliderItemsInitLength;
+                    do{
+                        
+                        firstActivePosition+=this.sliderItemsInitLength;
+                        lastActivePosition+=this.sliderItemsInitLength;
 
-                }while(this.sliderItems.length-lastActivePosition>=this.sliderItemsInitLength)
-               
+                    }while(this.sliderItems.length-lastActivePosition>=this.sliderItemsInitLength)
                 
-                this.sliderItems.forEach(slItem=>{
-                    slItem.classList.remove('active')
-                })
+                    
+                    this.sliderItems.forEach(slItem=>{
+                        slItem.classList.remove('active')
+                    })
 
-                for(let j=firstActivePosition;j<=lastActivePosition;j++){
-                        this.sliderItems[j].classList.add('active');
-                }
-                this.lens.style.transform = `translate3d(${-firstActivePosition*this.sliderItemWidth}px,0px,0px)`
+                    for(let j=firstActivePosition;j<=lastActivePosition;j++){
+                            this.sliderItems[j].classList.add('active');
+                    }
+                    this.lens.style.transition='all 0s ease'
+                    this.lens.style.transform = `translate3d(${-firstActivePosition*this.sliderItemWidth}px,0px,0px)`
+                    res()
+                })
+                .then(()=>{
+                    
+                    let lensLocalArray = window.getComputedStyle(this.lens).getPropertyValue('transform').split(',');
+                    const lenssPosition = parseInt(lensLocalArray[lensLocalArray.length-2]);
+
+                    let firstPosition=0;
+                    for(let i=0;i<this.sliderItems.length;i++){
+                        if(this.sliderItems[i].classList.contains('active') && firstPosition ===0){
+                            firstPosition=i+1;
+                        }
+                    }
+                    let nextActive = 0;
+                    for(let j=this.sliderItems.length-1;j>=0;j--){
+                        if(this.sliderItems[j].classList.contains('active') && nextActive < step){
+                            nextActive++
+                            this.sliderItems[j].classList.remove('active');
+
+                            this.sliderItems[j-items].classList.add('active');
+
+
+                            this.lens.style.transition=`all ${speed/1000}s ease`;
+                            this.lens.style.transform = `translate3d(${lenssPosition+(this.sliderItemWidth*step)}px,0px,0px)`
+
+                        }
+                    }
+
+                    // let nextActive = 0;
+                    // for(let j=this.sliderItems.length-1;j>=0;j--){
+                    //     if(this.sliderItems[j].classList.contains('active') && nextActive < step){
+                    //         nextActive++
+                    //         this.sliderItems[j].classList.remove('active');
+                            
+                    //         this.sliderItems[j-items].classList.add('active');
+                    //         // this.lens.style.transform = `translate3d(${lensPosition+(this.sliderItemWidth*step)}px,0px,0px)`
+
+                    //     }
+                    // }
+                })
             }
 
         }

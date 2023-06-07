@@ -14,7 +14,7 @@ body{
     display: none;
 
     /* background-color: ; */
-    /* display: flex; */
+    display: flex;
 }
 .slider-container .slider-lens .slider-item{
     /* background-color: ; */
