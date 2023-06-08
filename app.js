@@ -328,6 +328,7 @@ class Slider {
                     for(let j=0;j<this.sliderItems.length;j++){
                         if(this.sliderItems[j].classList.contains('active') && nextActive < step){
                             nextActive++
+                            
                             this.sliderItems[j].classList.remove('active');
                             this.sliderItems[j+items].classList.add('active');
                             this.lens.style.transition=`all ${speed/1000}s ease`;
@@ -417,17 +418,6 @@ class Slider {
                         }
                     }
 
-                    // let nextActive = 0;
-                    // for(let j=this.sliderItems.length-1;j>=0;j--){
-                    //     if(this.sliderItems[j].classList.contains('active') && nextActive < step){
-                    //         nextActive++
-                    //         this.sliderItems[j].classList.remove('active');
-                            
-                    //         this.sliderItems[j-items].classList.add('active');
-                    //         // this.lens.style.transform = `translate3d(${lensPosition+(this.sliderItemWidth*step)}px,0px,0px)`
-
-                    //     }
-                    // }
                 })
             }
 
